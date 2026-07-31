@@ -34,7 +34,7 @@ using namespace std;
 
 int main() {
     int N;
-    cout << "Ingrese un numero entero positivo: ";
+    cout << "Ingrese un numero entero positivoo: ";
     cin >> N;
 
     // Validacion: si N es menor o igual a 0, mostrar mensaje de error
