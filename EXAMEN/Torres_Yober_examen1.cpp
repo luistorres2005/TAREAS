@@ -1,10 +1,5 @@
-#include <iostream>
-#include <string>
-
-using namespace std;
-
 /*
-Nombre del estudiante: [Torres Cabezas Yober Luis]
+Nombre del estudiante: [TORRES CABEZAS YOBER LUIS]
 Fecha: 30/07/2026
 Tema: Sistema de registro y análisis de notas
 Entrada: cantidad, nombres, notas, opción del menú y nombre a buscar
@@ -12,182 +7,207 @@ Proceso: validar, almacenar, recorrer, calcular y buscar
 Salida: reporte general y resultado de búsqueda
 */
 
-// Prototipos de funciones
+#include <iostream>
+#include <string>
+
+using namespace std;
+
+// Declaración de prototipos de funciones
 void mostrarMenu();
-int registrarEstudiantes(string nombres[], float notas[]);
-void mostrarReporte(string nombres[], float notas[], int cantidad);
-void buscarEstudiante(string nombres[], float notas[], int cantidad);
+void registrarEstudiantes(string nombres[], double notas[], int &cantidad);
+void mostrarReporte(const string nombres[], const double notas[], int cantidad);
+void buscarEstudiante(const string nombres[], const double notas[], int cantidad);
 
 int main() {
-    // Arreglos y variables principales
-    string nombres[20];
-    float notas[20];
-    int cantidadEstudiantes = 0;
+    // Declaración de arreglos y variables principales (Máximo 20 estudiantes)
+    const int MAX_ESTUDIANTES = 20;
+    string nombres[MAX_ESTUDIANTES];
+    double notas[MAX_ESTUDIANTES];
+    int cantidad = 0; // Registra la cantidad actual de estudiantes (0 indica que no hay datos)
     int opcion;
 
     do {
         mostrarMenu();
-        
-        // Validación de la opción del menú
-        do {
-            cout << "Seleccione una opcion (1-4): ";
-            cin >> opcion;
-            if (opcion < 1 || opcion > 4) {
-                cout << "Error: Opcion invalida. Intente de nuevo.\n";
-            }
-        } while (opcion < 1 || opcion > 4);
+        cin >> opcion;
 
-        cout << "-----------------------------------\n";
-
-        // Control de opciones
-        if (opcion == 1) {
-            cantidadEstudiantes = registrarEstudiantes(nombres, notas);
-        } 
-        else if (opcion == 2) {
-            if (cantidadEstudiantes == 0) {
-                cout << "Error: Todavia no existen datos registrados.\n";
-            } else {
-                mostrarReporte(nombres, notas, cantidadEstudiantes);
-            }
-        } 
-        else if (opcion == 3) {
-            if (cantidadEstudiantes == 0) {
-                cout << "Error: Todavia no existen datos registrados.\n";
-            } else {
-                buscarEstudiante(nombres, notas, cantidadEstudiantes);
-            }
-        } 
-        else if (opcion == 4) {
-            cout << "Saliendo del programa. ¡Hasta luego!\n";
+        // Validación de la opción ingresada (entre 1 y 4)
+        if (opcion < 1 || opcion > 4) {
+            cout << "\nError: Opcion invalida. Por favor, seleccione una opcion entre 1 y 4.\n" << endl;
+            continue; // Regresa al inicio del bucle para volver a mostrar el menú
         }
 
-        cout << "-----------------------------------\n";
+        // Control obligatorio: No permitir reportes ni búsquedas si no hay estudiantes registrados
+        if ((opcion == 2 || opcion == 3) && cantidad == 0) {
+            cout << "\nAlerta: Todavia no existen datos registrados. Primero registre los estudiantes (Opcion 1).\n" << endl;
+            continue;
+        }
+
+        // Estructura de control switch para coordinar las opciones del menú
+        switch (opcion) {
+            case 1:
+                registrarEstudiantes(nombres, notas, cantidad);
+                break;
+            case 2:
+                mostrarReporte(nombres, notas, cantidad);
+                break;
+            case 3:
+                buscarEstudiante(nombres, notas, cantidad);
+                break;
+            case 4:
+                cout << "\nSaliste del programa.\n" << endl;
+                break;
+        }
 
     } while (opcion != 4);
 
     return 0;
 }
 
-// Función para imprimir el menú en pantalla
+// Función para mostrar el menú estructurado obligatorio
 void mostrarMenu() {
-    cout << "\n=========== MENU ===========\n";
-    cout << "1. Registrar estudiantes y notas\n";
-    cout << "2. Mostrar reporte general\n";
-    cout << "3. Buscar estudiante por nombre\n";
-    cout << "4. Salir\n";
+    cout << "=========== MENU ===========" << endl;
+    cout << "1. Registrar estudiantes y notas" << endl;
+    cout << "2. Mostrar reporte general" << endl;
+    cout << "3. Buscar estudiante por nombre" << endl;
+    cout << "4. Salir" << endl;
+    cout << "Seleccione una opcion: ";
 }
 
-// Función para registrar datos. Retorna la cantidad de estudiantes registrados.
-int registrarEstudiantes(string nombres[], float notas[]) {
-    int n;
+// Función 1: Registrar estudiantes y notas (Paso por referencia para actualizar 'cantidad')
+void registrarEstudiantes(string nombres[], double notas[], int &cantidad) {
+    int tempCantidad;
     
-    // Validar cantidad de estudiantes
+    cout << "\n--- REGISTRO DE ESTUDIANTES ---" << endl;
+    
+    // 1. Pedir la cantidad de estudiantes y validarla entre 1 y 20
     do {
-        cout << "Ingrese la cantidad de estudiantes (1 a 20): ";
-        cin >> n;
-        if (n < 1 || n > 20) {
-            cout << "Error: La cantidad debe estar entre 1 y 20.\n";
+        cout << "Ingrese la cantidad de estudiantes a registrar (1-20): ";
+        cin >> tempCantidad;
+        if (tempCantidad < 1 || tempCantidad > 20) {
+            cout << "Error: La cantidad de estudiantes debe estar estrictamente entre 1 y 20." << endl;
         }
-    } while (n < 1 || n > 20);
+    } while (tempCantidad < 1 || tempCantidad > 20);
 
-    // Bucle para ingresar y validar los datos de cada estudiante
-    for (int i = 0; i < n; i++) {
-        cout << "\nEstudiante " << i + 1 << ":\n";
-        cout << "Primer nombre (sin espacios): ";
+    cantidad = tempCantidad; // Actualizamos la cantidad oficial de registros
+
+    // 2. Solicitar el nombre y la nota de cada estudiante
+    for (int i = 0; i < cantidad; i++) {
+        cout << "\nEstudiante " << (i + 1) << ":" << endl;
+        cout << "  Primer nombre (sin espacios): ";
         cin >> nombres[i];
-        
-        // Validar nota
+
+        // 3. Validar cada nota entre 0 y 20; si es inválida, volver a pedirla
+        double notaTemp;
         do {
-            cout << "Nota final (0 a 20): ";
-            cin >> notas[i];
-            if (notas[i] < 0 || notas[i] > 20) {
-                cout << "Error: La nota debe estar entre 0 y 20.\n";
+            cout << "  Nota final (0.00 a 20.00): ";
+            cin >> notaTemp;
+            if (notaTemp < 0.0 || notaTemp > 20.0) {
+                cout << "  Error: Nota invalida. Debe ingresar una nota en la escala de 0 a 20." << endl;
             }
-        } while (notas[i] < 0 || notas[i] > 20);
+        } while (notaTemp < 0.0 || notaTemp > 20.0);
+
+        notas[i] = notaTemp; // Guardamos la nota validada en el arreglo relacionado
     }
     
-    cout << "\n¡Datos registrados correctamente!\n";
-    return n; // Retornamos la cantidad para actualizarla en el main
+    cout << "\n Estudiantes registrados exitosamente\n" << endl;
 }
 
-// Función para mostrar el reporte general
-void mostrarReporte(string nombres[], float notas[], int cantidad) {
-    float sumaNotas = 0;
+// Función 2: Mostrar reporte general analítico
+void mostrarReporte(const string nombres[], const double notas[], int cantidad) {
+    cout << "\n=============================================" << endl;
+    cout << "             REPORTE GENERAL" << endl;
+    cout << "=============================================" << endl;
+    
+    double sumaNotas = 0;
     int aprobados = 0;
     int reprobados = 0;
-    
-    // Variables para mayor y menor (asumimos que el primero es el mayor y menor inicialmente)
-    float notaMayor = notas[0];
-    float notaMenor = notas[0];
+
+    // Inicializamos el control de mayor y menor con el primer estudiante del arreglo
+    double notaMayor = notas[0];
     string nombreMayor = nombres[0];
+    
+    double notaMenor = notas[0];
     string nombreMenor = nombres[0];
 
-    cout << "\n--- REPORTE GENERAL ---\n";
+    // 1. Listado numerado con nombre, nota y estado
+    cout << "Nro.   Nombre          Nota      Estado" << endl;
+    cout << "---------------------------------------------" << endl;
     
-    // 1. Listado numerado
     for (int i = 0; i < cantidad; i++) {
-        string estado = (notas[i] >= 14) ? "APROBADO" : "REPROBADO";
-        cout << i + 1 << ". " << nombres[i] << " - Nota: " << notas[i] << " - Estado: " << estado << "\n";
-        
-        // Acumular para promedio
-        sumaNotas += notas[i];
-        
-        // Contar estados
-        if (notas[i] >= 14) {
-            aprobados++;
+        string estado;
+        if (notas[i] >= 14.0) {
+            estado = "APROBADO";
+            aprobados++; // Contador de aprobados
         } else {
-            reprobados++;
+            estado = "REPROBADO";
+            reprobados++; // Contador de reprobados
         }
-        
-        // Determinar mayor (solo actualiza si es estrictamente mayor, conservando el primero)
+
+        // Impresión en formato de fila
+        cout << (i + 1) << ".\t" << nombres[i];
+        if (nombres[i].length() < 8) {
+            cout << "\t\t"; // Tabulación extra para mantener la alineación de columnas
+        } else {
+            cout << "\t";
+        }
+        cout << notas[i] << "\t" << estado << endl;
+
+        // Acumulación para el promedio general
+        sumaNotas += notas[i];
+
+        // Identificación de la nota mayor (Primera coincidencia: estricto '>')
         if (notas[i] > notaMayor) {
             notaMayor = notas[i];
             nombreMayor = nombres[i];
         }
-        
-        // Determinar menor (solo actualiza si es estrictamente menor, conservando el primero)
+
+        // Identificación de la nota menor (Primera coincidencia: estricto '<')
         if (notas[i] < notaMenor) {
             notaMenor = notas[i];
             nombreMenor = nombres[i];
         }
     }
 
-    // 2. Calcular e imprimir promedio
-    float promedio = sumaNotas / cantidad;
-    cout << "\nPromedio general de las notas: " << promedio << "\n";
-    
-    // 3. Estudiante con nota mayor y menor
-    cout << "Estudiante con nota MAYOR: " << nombreMayor << " (" << notaMayor << ")\n";
-    cout << "Estudiante con nota MENOR: " << nombreMenor << " (" << notaMenor << ")\n";
-    
-    // 4. Cantidad de aprobados y reprobados
-    cout << "Cantidad de aprobados: " << aprobados << "\n";
-    cout << "Cantidad de reprobados: " << reprobados << "\n";
+    // 2. Cálculos finales
+    double promedioGeneral = sumaNotas / cantidad;
+
+    // Impresión de estadísticas descriptivas
+    cout << "---------------------------------------------" << endl;
+    cout << "Promedio General:   " << promedioGeneral << endl;
+    cout << "Nota Mayor:         " << notaMayor << " (" << nombreMayor << ")" << endl;
+    cout << "Nota Menor:         " << notaMenor << " (" << nombreMenor << ")" << endl;
+    cout << "Aprobados:   " << aprobados << " estudiante(s)" << endl;
+    cout << "Reprobados:   " << reprobados << " estudiante(s)" << endl;
+    cout << "=============================================\n" << endl;
 }
 
-// Función para buscar un estudiante por coincidencia exacta (Búsqueda secuencial)
-void buscarEstudiante(string nombres[], float notas[], int cantidad) {
-    string nombreBuscado;
-    bool encontrado = false;
-    
-    cout << "Ingrese el nombre del estudiante a buscar: ";
-    cin >> nombreBuscado;
+// Función 3: Buscar estudiante por nombre (Búsqueda Secuencial)
+void buscarEstudiante(const string nombres[], const double notas[], int cantidad) {
+    string nombreBuscar;
+    cout << "\n--- BUSCAR ESTUDIANTE ---" << endl;
+    cout << "Ingrese el nombre exacto del estudiante a buscar: ";
+    cin >> nombreBuscar;
 
-    // Recorrer el arreglo (Búsqueda Secuencial)
+    bool encontrado = false;
+    int indiceEncontrado = -1;
+
+    // Recorrido secuencial para encontrar la primera coincidencia exacta (Case-sensitive)
     for (int i = 0; i < cantidad; i++) {
-        if (nombres[i] == nombreBuscado) {
-            string estado = (notas[i] >= 14) ? "APROBADO" : "REPROBADO";
-            cout << "\n--- RESULTADO DE BUSQUEDA ---\n";
-            cout << "Nombre: " << nombres[i] << "\n";
-            cout << "Nota: " << notas[i] << "\n";
-            cout << "Estado: " << estado << "\n";
-            
+        if (nombres[i] == nombreBuscar) {
             encontrado = true;
-            break; // Detenemos la búsqueda en la primera coincidencia
+            indiceEncontrado = i;
+            break; // Salimos del bucle en la primera coincidencia encontrada
         }
     }
 
-    if (!encontrado) {
-        cout << "\nEl estudiante '" << nombreBuscado << "' no se encuentra registrado.\n";
+    // Mostrar resultados según la búsqueda
+    if (encontrado) {
+        string estado = (notas[indiceEncontrado] >= 14.0) ? "APROBADO" : "REPROBADO";
+        cout << "\nEstudiante encontrado" << endl;
+        cout << "  Nombre: " << nombres[indiceEncontrado] << endl;
+        cout << "  Nota Final: " << notas[indiceEncontrado] << endl;
+        cout << "  Estado: " << estado << "\n" << endl;
+    } else {
+        cout << "\nResultado: El estudiante \"" << nombreBuscar << "\" no se encuentra registrado en el sistema.\n" << endl;
     }
 }
