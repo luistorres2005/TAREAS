@@ -75,7 +75,7 @@ int main() {
         cout << "5. Componente creativo - Ficha de salud" << endl;
         cout << "6. Salir del programa" << endl;
         cout << "-------------------------------------" << endl;
-        cout << "Seleccione una opcion (1-6): ";
+        cout << "Seleccione una opcion: ";
         cin >> opcion;
 
         // VALIDACIÓN DE ENTRADA INCOHERENTE
@@ -129,7 +129,7 @@ void registrarSocio(string nombres[], int edades[], double pesos[], int &cantida
 
     int edad_ingresada;
     do {
-        cout << "Ingrese la edad (debe ser mayor o igual a 0): ";
+        cout << "Ingrese la edad: ";
         cin >> edad_ingresada;
         if (cin.fail() || edad_ingresada < 0) {
             cout << "ERROR. Edad invalida, intente de nuevo." << endl;
@@ -201,7 +201,7 @@ void buscarSocio(const string nombres[], const int edades[], const double pesos[
             cout << "\nLISTO. Socio encontrado!" << endl;
             cout << "ID en lista: " << (i + 1) << endl;
             cout << "Nombre completo: " << nombres[i] << endl;
-            cout << "Edad: " << edades[i] << " anos" << endl;
+            cout << "Edad: " << edades[i] << " anios" << endl;
             cout << "Peso actual: " << pesos[i] << " kg" << endl;
             encontrado = true;
             break;
@@ -239,11 +239,11 @@ void mostrarReporte(const string nombres[], const int edades[], const double pes
     cout << "\n=====================================================" << endl;
     cout << "                 REPORTE ESTADISTICO                 " << endl;
     cout << "=====================================================" << endl;
-    cout << "1. Promedio de edad del gimnasio: " << promedio_edad << " anos." << endl;
+    cout << "1. Promedio de edad del gimnasio: " << promedio_edad << " anios." << endl;
     cout << "2. Socio con menor peso registrado actualmente:" << endl;
     cout << "   - Nombre: " << nombres[indice_minimo] << endl;
     cout << "   - Peso: " << pesos[indice_minimo] << " kg" << endl;
-    cout << "   - Edad: " << edades[indice_minimo] << " anos" << endl;
+    cout << "   - Edad: " << edades[indice_minimo] << " anios" << endl;
     cout << "=====================================================" << endl;
 }
 
