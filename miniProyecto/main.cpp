@@ -54,6 +54,7 @@ void registrarSocio(string nombres[], int edades[], double pesos[], int &cantida
 void mostrarSocios(const string nombres[], const int edades[], const double pesos[], int cantidad);
 void buscarSocio(const string nombres[], const int edades[], const double pesos[], int cantidad);
 void mostrarReporte(const string nombres[], const int edades[], const double pesos[], int cantidad);
+void fichaDeSalud(const string nombres[], const int edades[], const double pesos[], int cantidad);
 
 int main() {
     string nombres[MAX_SOCIOS];
@@ -99,7 +100,7 @@ int main() {
                 mostrarReporte(nombres, edades, pesos, cantidad_registros);
                 break;
             case 5:
-                cout << "\n[Proximamente] Aqui se ejecutara el Asistente de Hidratacion..." << endl;
+                fichaDeSalud(nombres, edades, pesos, cantidad_registros);
                 break;
             case 6:
                 cout << "\nGracias por usar GymFit Admin. Que tengas un excelente entrenamiento :)" << endl;
@@ -225,7 +226,8 @@ void mostrarReporte(const string nombres[], const int edades[], const double pes
     }
     double promedio_edad = suma_edades / cantidad;
 
-    double peso_minimo = pesos [0];
+    // Inicializamos con el primer elemento para la comparación
+    double peso_minimo = pesos[0];
     int indice_minimo = 0;
     for (int i = 1; i < cantidad; i++) {
         if (pesos[i] < peso_minimo) {
@@ -243,4 +245,54 @@ void mostrarReporte(const string nombres[], const int edades[], const double pes
     cout << "   - Peso: " << pesos[indice_minimo] << " kg" << endl;
     cout << "   - Edad: " << edades[indice_minimo] << " anos" << endl;
     cout << "=====================================================" << endl;
+}
+
+// === FICHA DE SALUD - COMPONENTE CREATIVO ===
+void fichaDeSalud(const string nombres[], const int edades[], const double pesos[], int cantidad) {
+    if (cantidad == 0) {
+        cout << "\nERROR. No hay socios registrados para generar la ficha de salud." << endl;
+        return;
+    }
+
+    cout << "\n--- GENERAR FICHA DE SALUD ---" << endl;
+    cout << "Ingrese el nombre del socio: ";
+    string nombre_buscado;
+    cin.ignore();
+    getline(cin, nombre_buscado);
+
+    bool encontrado = false;
+    for (int i = 0; i < cantidad; i++) {
+        if (nombres[i] == nombre_buscado) {
+            encontrado = true;
+
+            // Consumo diario de agua basado en el peso (35ml por kg)
+            double litros_agua = pesos[i] * 0.035;
+
+            //Recomendación de rutina basada en el rango de edad
+            string sugerencia;
+            if (edades[i] < 18) {
+                sugerencia = "Acondicionamiento fisico general y desarrollo coordinativo.";
+            } else if (edades[i] >= 18 && edades[i] <= 50) {
+                sugerencia = "Entrenamiento de fuerza, hipertrofia o resistencia de alta intensidad.";
+            } else {
+                sugerencia = "Cardio de bajo impacto, movilidad articular y fortalecimiento muscular funcional.";
+            }
+
+            cout << "\n=================================================================" << endl;
+            cout << "                 FICHA DE SALUD: " << nombres[i] << endl;
+            cout << "=================================================================" << endl;
+            cout << "Nombre completo:     " << nombres[i] << endl;
+            cout << "Edad:                " << edades[i] << " anios" << endl;
+            cout << "Peso actual:         " << pesos[i] << " kg" << endl;
+            cout << "-----------------------------------------------------------------" << endl;
+            cout << "Meta diaria de agua: " << litros_agua << " litros recomendados al dia." << endl;
+            cout << "Rutina recomendada:  " << sugerencia << endl;
+            cout << "=================================================================" << endl;
+            break;
+        }
+    }
+
+    if (!encontrado) {
+        cout << "\nERROR. El socio \"" << nombre_buscado << "\" no se encuentra registrado." << endl;
+    }
 }
