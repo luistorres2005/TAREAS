@@ -19,7 +19,7 @@ La aplicación cuenta con una interfaz de menú interactivo y repetitivo con las
 5.  **Componente creativo - Ficha de salud:** Genera un análisis de bienestar físico personalizado para un socio seleccionado.
 6.  **Salir del programa:** Cierra la aplicación con un saludo de despedida.
 
-## Funcionalidad Creativa: Ficha de Salud y Bienestar
+## Funcionalidad creativa: Ficha de salud y bienestar
 
 Para aportar un valor agregado al sistema, se diseñó el **Asistente de Ficha de Salud**, que realiza dos operaciones automáticas al consultar a un socio:
 1.  **Cálculo de Hidratación Personalizada:** Utiliza el peso del socio para calcular cuántos litros de agua necesita consumir al día mediante la fórmula biológica estándar (35 ml de agua por cada kg de peso corporal: `peso * 0.035`).
