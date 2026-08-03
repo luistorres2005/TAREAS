@@ -47,9 +47,15 @@ Salida:
 
 using namespace std;
 
+// Constante para el límite máximo de socios en el gimnasio 
+const int MAX_SOCIOS = 20;
+
+
+// Pasamos los arreglos para guardar los datos y el contador por referencia para actualizarlo 
+void registrarSocio(string nombres[], int edades[], double pesos[], int &cantidad);
+
 int main() {
     
-    // Almacenamos la información en el mismo índice para cada socio
     string nombres[MAX_SOCIOS];
     int edades[MAX_SOCIOS];
     double pesos[MAX_SOCIOS];
@@ -60,7 +66,7 @@ int main() {
     // Variable para capturar la opción del menú
     int opcion;
 
-    //MENÚ REPETITIVO
+    // MENÚ REPETITIVO
     do {
         cout << "\n=====================================" << endl;
         cout << "       SISTEMA GYMFIT ADMIN          " << endl;
@@ -75,17 +81,18 @@ int main() {
         cout << "Seleccione una opcion (1-6): ";
         cin >> opcion;
 
-        //  VALIDACIÓN DE ENTRADA INCOHERENTE         
+        // VALIDACIÓN DE ENTRADA INCOHERENTE         
         if (cin.fail()) {
             cin.clear(); // Limpia el estado de error de cin
             cin.ignore(10000, '\n'); // Ignora los caracteres incorrectos ingresados
             opcion = -1; // Forzamos una opción inválida para activar el caso 'default'
         }
 
-        //SELECTOR DE ACCIÓN
+        // SELECTOR DE ACCIÓN
         switch (opcion) {
             case 1:
-                cout << "\n[Proximamente] Aqui se registrara un nuevo socio..." << endl;
+                // Función de registro 
+                registrarSocio(nombres, edades, pesos, cantidad_registros);
                 break;
             case 2:
                 cout << "\n[Proximamente] Aqui se listaran todos los socios registrados..." << endl;
@@ -100,14 +107,64 @@ int main() {
                 cout << "\n[Proximamente] Aqui se ejecutara el Asistente de Hidratacion y Entrenamiento..." << endl;
                 break;
             case 6:
-                cout << "\nGracias por usar GymFit Admin. ¡Que tengas un excelente entrenamiento!" << endl;
+                cout << "\nGracias por usar GymFit Admin. Que tengas un excelente entrenamiento :)" << endl;
                 break;
             default:
-                cout << "\n[ERROR] Opcion no valida. Intente nuevamente con un numero del 1 al 6." << endl;
+                cout << "\nERROR. Opcion no valida, intente nuevamente con un numero del 1 al 6." << endl;
                 break;
         }
 
     } while (opcion != 6); // Se repite hasta que el usuario elija la opción Salir 
 
     return 0;
+}
+
+// IMPLEMENTACIÓN DE LA FUNCIÓN DE REGISTRO
+void registrarSocio(string nombres[], int edades[], double pesos[], int &cantidad) {
+    // Valida si el gimnasio ya está lleno 
+    if (cantidad >= MAX_SOCIOS) {
+        cout << "\nERROR. El gimnasio esta lleno, no se pueden registrar mas de " << MAX_SOCIOS << " socios." << endl;
+        return; 
+    }
+
+    cout << "\n--- REGISTRAR NUEVO SOCIO ---" << endl;
+    
+    // Captura de nombre
+    cout << "Ingrese el nombre completo del socio: ";
+    cin.ignore(); 
+    getline(cin, nombres[cantidad]); // leer nombres y apellidos con espacios
+
+    // Validación de edad 
+    int edad_ingresada;
+    do {
+        cout << "Ingrese la edad (debe ser mayor o igual a 0): ";
+        cin >> edad_ingresada;
+        if (cin.fail() || edad_ingresada < 0) {
+            cout << "ERROR. Edad invalida, intente de nuevo." << endl;
+            cin.clear();
+            cin.ignore(10000, '\n');
+        } else {
+            break; 
+        }
+    } while (true);
+    edades[cantidad] = edad_ingresada; // Guardamos en el arreglo de edades en la posición actual
+
+    // Validación del Peso 
+    double peso_ingresado;
+    do {
+        cout << "Ingrese el peso en kg: ";
+        cin >> peso_ingresado;
+        if (cin.fail() || peso_ingresado <= 0.0) {
+            cout << "ERROR. Peso invalido, intente de nuevo." << endl;
+            cin.clear();
+            cin.ignore(10000, '\n');
+        } else {
+            break; 
+        }
+    } while (true);
+    pesos[cantidad] = peso_ingresado; // Guardamos en el arreglo de pesos en la posición actual
+
+    // Incrementamos la variable de control 
+    cantidad++; 
+    cout << "\nLISTO. Socio registrado con exito, socios actuales: " << cantidad << endl;
 }
