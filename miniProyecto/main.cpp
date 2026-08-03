@@ -42,3 +42,72 @@ Salida:
 
 */
 
+#include <iostream>
+#include <string>
+
+using namespace std;
+
+int main() {
+    
+    // Almacenamos la información en el mismo índice para cada socio
+    string nombres[MAX_SOCIOS];
+    int edades[MAX_SOCIOS];
+    double pesos[MAX_SOCIOS];
+
+    // Variable para controlar los socios registrados actualmente
+    int cantidad_registros = 0;
+
+    // Variable para capturar la opción del menú
+    int opcion;
+
+    //MENÚ REPETITIVO
+    do {
+        cout << "\n=====================================" << endl;
+        cout << "       SISTEMA GYMFIT ADMIN          " << endl;
+        cout << "=====================================" << endl;
+        cout << "1. Registrar un nuevo socio" << endl;
+        cout << "2. Mostrar todos los socios" << endl;
+        cout << "3. Buscar un socio por nombre" << endl;
+        cout << "4. Mostrar reporte general" << endl;
+        cout << "5. Componente creativo - Ficha de salud" << endl;
+        cout << "6. Salir del programa" << endl;
+        cout << "-------------------------------------" << endl;
+        cout << "Seleccione una opcion (1-6): ";
+        cin >> opcion;
+
+        //  VALIDACIÓN DE ENTRADA INCOHERENTE         
+        if (cin.fail()) {
+            cin.clear(); // Limpia el estado de error de cin
+            cin.ignore(10000, '\n'); // Ignora los caracteres incorrectos ingresados
+            opcion = -1; // Forzamos una opción inválida para activar el caso 'default'
+        }
+
+        //SELECTOR DE ACCIÓN
+        switch (opcion) {
+            case 1:
+                cout << "\n[Proximamente] Aqui se registrara un nuevo socio..." << endl;
+                break;
+            case 2:
+                cout << "\n[Proximamente] Aqui se listaran todos los socios registrados..." << endl;
+                break;
+            case 3:
+                cout << "\n[Proximamente] Aqui buscaremos a un socio por su nombre..." << endl;
+                break;
+            case 4:
+                cout << "\n[Proximamente] Aqui calcularemos el promedio de edad y el socio mas liviano..." << endl;
+                break;
+            case 5:
+                cout << "\n[Proximamente] Aqui se ejecutara el Asistente de Hidratacion y Entrenamiento..." << endl;
+                break;
+            case 6:
+                cout << "\nGracias por usar GymFit Admin. ¡Que tengas un excelente entrenamiento!" << endl;
+                break;
+            default:
+                cout << "\n[ERROR] Opcion no valida. Intente nuevamente con un numero del 1 al 6." << endl;
+                break;
+        }
+
+    } while (opcion != 6); // Se repite hasta que el usuario elija la opción Salir 
+
+    return 0;
+}
