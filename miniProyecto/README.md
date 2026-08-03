@@ -22,8 +22,8 @@ La aplicación cuenta con una interfaz de menú interactivo y repetitivo con las
 ## Funcionalidad creativa: Ficha de salud y bienestar
 
 Para aportar un valor agregado al sistema, se diseñó el **Asistente de Ficha de Salud**, que realiza dos operaciones automáticas al consultar a un socio:
-1.  **Cálculo de Hidratación Personalizada:** Utiliza el peso del socio para calcular cuántos litros de agua necesita consumir al día mediante la fórmula biológica estándar (35 ml de agua por cada kg de peso corporal: `peso * 0.035`).
-2.  **Sugerencia de Rutina por Rango de Edad:** Analiza la edad del socio mediante lógica condicional para asignarle una categoría de entrenamiento segura:
+1.  **Cálculo de hidratación personalizada:** Utiliza el peso del socio para calcular cuántos litros de agua necesita consumir al día mediante la fórmula biológica estándar (35 ml de agua por cada kg de peso corporal: `peso * 0.035`).
+2.  **Sugerencia de rutina por rango de edad:** Analiza la edad del socio mediante lógica condicional para asignarle una categoría de entrenamiento segura:
     *   *Menores de 18 años:* Ejercicios coordinativos y de acondicionamiento general.
     *   *Entre 18 y 50 años:* Rutinas de fuerza, hipertrofia o resistencia física de alta intensidad.
     *   *Mayores de 50 años:* Ejercicios funcionales, movilidad articular y cardio de bajo impacto.
