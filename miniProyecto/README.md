@@ -13,9 +13,9 @@ El sistema almacena y gestiona tres datos esenciales de cada socio mediante el u
 
 La aplicación cuenta con una interfaz de menú interactivo y repetitivo con las siguientes opciones:
 1.  **Registrar un nuevo socio:** Permite ingresar los datos de un socio validando que no se superen los 20 cupos disponibles y que los valores de edad y peso sean coherentes.
-2.  **Mostrar todos los socios:** Presenta de forma ordenada y estética en una tabla el listado de todos los socios registrados actualmente, indicando el número de cupos ocupados.
+2.  **Mostrar todos los socios:** Presenta de forma ordenada una tabla con el listado de todos los socios registrados actualmente, indicando el número de cupos ocupados.
 3.  **Buscar un socio por nombre:** Realiza un recorrido por la lista para localizar a un socio específico por su nombre exacto y mostrar su ficha de datos personales.
-4.  **Mostrar reporte general:** Calcula y despliega de manera automática la edad promedio de los socios activos y localiza al socio con el menor peso registrado.
+4.  **Mostrar reporte general:** Calcula y muestra de manera automática la edad promedio de los socios activos y localiza al socio con el menor peso registrado.
 5.  **Componente creativo - Ficha de salud:** Genera un análisis de bienestar físico personalizado para un socio seleccionado.
 6.  **Salir del programa:** Cierra la aplicación con un saludo de despedida.
 
