@@ -50,9 +50,11 @@ using namespace std;
 // Constante para el límite máximo de socios en el gimnasio 
 const int MAX_SOCIOS = 20;
 
-
+// === PROTOTIPOS DE LAS FUNCIONES ===
 // Pasamos los arreglos para guardar los datos y el contador por referencia para actualizarlo 
 void registrarSocio(string nombres[], int edades[], double pesos[], int &cantidad);
+// Mostrar la lista de socios 
+void mostrarSocios(const string nombres[], const int edades[], const double pesos[], int cantidad);
 
 int main() {
     
@@ -95,7 +97,8 @@ int main() {
                 registrarSocio(nombres, edades, pesos, cantidad_registros);
                 break;
             case 2:
-                cout << "\n[Proximamente] Aqui se listaran todos los socios registrados..." << endl;
+                // Función de listado
+                mostrarSocios(nombres, edades, pesos, cantidad_registros);
                 break;
             case 3:
                 cout << "\n[Proximamente] Aqui buscaremos a un socio por su nombre..." << endl;
@@ -104,7 +107,7 @@ int main() {
                 cout << "\n[Proximamente] Aqui calcularemos el promedio de edad y el socio mas liviano..." << endl;
                 break;
             case 5:
-                cout << "\n[Proximamente] Aqui se ejecutara el Asistente de Hidratacion y Entrenamiento..." << endl;
+                cout << "\n[Proximamente] Aqui se ejecutara el Asistente de Hidratacion..." << endl;
                 break;
             case 6:
                 cout << "\nGracias por usar GymFit Admin. Que tengas un excelente entrenamiento :)" << endl;
@@ -119,7 +122,7 @@ int main() {
     return 0;
 }
 
-// IMPLEMENTACIÓN DE LA FUNCIÓN DE REGISTRO
+// === IMPLEMENTACIÓN DE LA FUNCIÓN DE REGISTRO ===
 void registrarSocio(string nombres[], int edades[], double pesos[], int &cantidad) {
     // Valida si el gimnasio ya está lleno 
     if (cantidad >= MAX_SOCIOS) {
@@ -167,4 +170,29 @@ void registrarSocio(string nombres[], int edades[], double pesos[], int &cantida
     // Incrementamos la variable de control 
     cantidad++; 
     cout << "\nLISTO. Socio registrado con exito, socios actuales: " << cantidad << endl;
+}
+
+//IMPLEMENTACIÓN DE LA FUNCIÓN DE LISTADO
+void mostrarSocios(const string nombres[], const int edades[], const double pesos[], int cantidad) {
+    //Validar si no hay socios para evitar recorrer arreglos vacíos
+    if (cantidad == 0) {
+        cout << "\nERROR. No hay socios registrados todavia." << endl;
+        return;
+    }
+
+    cout << "\n=================================================================" << endl;
+    cout << "                     SOCIOS REGISTRADOS                          " << endl;
+    cout << "=================================================================" << endl;
+    cout << "ID\tEdad\tPeso (kg)\tNombre Completo" << endl;
+    cout << "-----------------------------------------------------------------" << endl;
+    
+    // Recorremos los arreglos paralelos desde 0 hasta cantidad - 1
+    for (int i = 0; i < cantidad; i++) {
+        cout << (i + 1) << "\t" 
+             << edades[i] << "\t" 
+             << pesos[i] << "\t\t" 
+             << nombres[i] << endl;
+    }
+    cout << "=================================================================" << endl;
+    cout << "Capacidad actual: " << cantidad << " de " << MAX_SOCIOS << " cupos ocupados." << endl;
 }
